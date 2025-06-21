@@ -4,24 +4,30 @@ namespace Tester;
 
 internal static class Program
 {
-    private static void Main(string[] args)
-    {
-        string connectionString = args[0];
+	private static void Main(string[] args)
+	{
+		if (args.Length == 0)
+		{
+			System.Console.WriteLine("Connection string is not provided.");
+			return;
+		}
 
-        MSSQLConnectionTester tester = new MSSQLConnectionTester(connectionString);
+		string connectionString = args[0];
 
-        DataTable databases = tester.GetDatabases();
+		MSSQLConnectionTester tester = new MSSQLConnectionTester(connectionString);
 
-        for (int i = 0; i < databases.Rows.Count; i++)
-        {
-            System.Console.Write($"Id: {(int)databases.Rows[i]["id"]}");
-            System.Console.Write('\t');
-            System.Console.Write($"Name: {(string)databases.Rows[i]["name"]}");
-            System.Console.Write(System.Environment.NewLine);
-        }
+		DataTable databases = tester.GetDatabases();
 
-        string version = tester.GetVersion();
+		for (int i = 0; i < databases.Rows.Count; i++)
+		{
+			System.Console.Write($"Id: {(int)databases.Rows[i]["id"]}");
+			System.Console.Write('\t');
+			System.Console.Write($"Name: {(string)databases.Rows[i]["name"]}");
+			System.Console.Write(System.Environment.NewLine);
+		}
 
-        System.Console.WriteLine(version);
-    }
+		string version = tester.GetVersion();
+
+		System.Console.WriteLine(version);
+	}
 }
